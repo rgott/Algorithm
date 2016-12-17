@@ -71,12 +71,11 @@ namespace Algorithm
 
         public static void Merge(ref T[] array)
         {
-            int length = (array.Length % 2 == 1) ? array.Length - 1 : array.Length;
             int? LeftPtr = null;// secondary left pointer
 
-            for (int distoffset = 1; distoffset < length; distoffset *= 2)
+            for (int distoffset = 1; distoffset < array.Length; distoffset *= 2)
             {// outer pass
-                for (int i = 0; i < length / distoffset; i++)
+                for (int i = 0; i < array.Length / distoffset; i++)
                 {
                     int PlacementPtr = i * (distoffset * 2);
                     int RightPtr = PlacementPtr + distoffset;
@@ -89,18 +88,20 @@ namespace Algorithm
                             RightPtr = (int)LeftPtr;
                             LeftPtr = null;
                         }
-                        else
+                        else if (PlacementPtr >= RightPtr || RightPtr >= max || RightPtr >= array.Length)
                         {
-
-                            if (PlacementPtr >= RightPtr || RightPtr >= max || RightPtr >= array.Length)
+                            if(LeftPtr != null)
                             {
-                                break;
-                            }
+                                if (array[PlacementPtr].CompareTo(array[(int)LeftPtr]) == 1)
+                                { // swap right
+                                    Swap(ref array, PlacementPtr, (int)LeftPtr);
+                                }
+                            } 
+                            break;
                         }
-                        if (LeftPtr != null)
+                        else if (LeftPtr != null)
                         {
                             if (array[(int)LeftPtr].CompareTo(array[RightPtr]) == 1)
-                            //if([PrimaryLeftPtr] > [RightPtr])
                             { // swap right
                                 if (PlacementPtr == LeftPtr) LeftPtr = RightPtr;
                                 Swap(ref array, PlacementPtr++, RightPtr++);
