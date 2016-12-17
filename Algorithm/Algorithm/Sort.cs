@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace Algorithm
 {
@@ -28,7 +29,6 @@ namespace Algorithm
                     }
                 }
             }
-            // now sorted
         }
 
         public static void Selection(ref T[] array)
@@ -65,6 +65,66 @@ namespace Algorithm
                         if ((array[j] as IComparable).CompareTo(array[j - 1]) == -1)// if not in order
                             Swap(ref array, j, j - 1);
                     }
+                }
+            }
+        }
+
+        public static void Merge(ref T[] array)
+        {
+            int length = (array.Length % 2 == 1) ? array.Length - 1 : array.Length;
+            int? LeftPtr = null;// secondary left pointer
+
+            for (int distoffset = 1; distoffset < length; distoffset *= 2)
+            {// outer pass
+                for (int i = 0; i < length / distoffset; i++)
+                {
+                    int PlacementPtr = i * (distoffset * 2);
+                    int RightPtr = PlacementPtr + distoffset;
+                    int max = RightPtr + distoffset;
+
+                    while(true)
+                    {
+                        if(LeftPtr != null && RightPtr >= max)
+                        {
+                            RightPtr = (int)LeftPtr;
+                            LeftPtr = null;
+                        }
+                        else
+                        {
+
+                            if (PlacementPtr >= RightPtr || RightPtr >= max || RightPtr >= array.Length)
+                            {
+                                break;
+                            }
+                        }
+                        if (LeftPtr != null)
+                        {
+                            if (array[(int)LeftPtr].CompareTo(array[RightPtr]) == 1)
+                            //if([PrimaryLeftPtr] > [RightPtr])
+                            { // swap right
+                                if (PlacementPtr == LeftPtr) LeftPtr = RightPtr;
+                                Swap(ref array, PlacementPtr++, RightPtr++);
+                            }
+                            else
+                            { // swap left
+                                Swap(ref array, PlacementPtr++, (int)LeftPtr++);
+
+                                if (LeftPtr >= RightPtr)
+                                    LeftPtr = null;
+                            }
+                        }
+                        else if (array[PlacementPtr].CompareTo(array[RightPtr]) == 1)
+                        //else if (array[LeftPtr] > array[RightPtr])
+                        {
+                            LeftPtr = RightPtr;
+                            Swap(ref array, PlacementPtr++, RightPtr++);
+                        }
+                        else
+                        {
+                            PlacementPtr++;
+                        }
+                    }
+                    LeftPtr = null;
                 }
             }
         }
