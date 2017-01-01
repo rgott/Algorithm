@@ -12,7 +12,6 @@ namespace Algorithm
             array[swapIndex2] = temp;
         }
 
-
         public static void Bubble(ref T[] array)
         {
             bool isSorted = false;
@@ -33,18 +32,18 @@ namespace Algorithm
 
         public static void Selection(ref T[] array)
         {
-            if(array.Length > 1)
+            if (array.Length > 1)
             {
                 for (int i = 0; i < array.Length; i++)
                 {
                     int minValue = i;
                     for (int j = i; j < array.Length; j++)
                     {
-                        if((array[minValue] as IComparable).CompareTo(array[j]) == 1) // first < second then second = max
+                        if ((array[minValue] as IComparable).CompareTo(array[j]) == 1) // first < second then second = max
                             minValue = j;
                     }
 
-                    if(minValue != i)
+                    if (minValue != i)
                         Swap(ref array, minValue, i);
                 }
             }
@@ -71,51 +70,59 @@ namespace Algorithm
 
         public static void Merge(ref T[] array)
         {
-            int? LeftPtr = null;// secondary left pointer
-
             for (int distoffset = 1; distoffset < array.Length; distoffset *= 2)
-            {// outer pass
+            {// outer pass for number of sets
                 for (int i = 0; i < array.Length / distoffset; i++)
-                {
+                { // for set combination
+                    // left pointer will be placement pointer if Left pointer is null
+                    int? LeftPtr = null;
+
                     int PlacementPtr = i * (distoffset * 2);
                     int RightPtr = PlacementPtr + distoffset;
                     int max = RightPtr + distoffset;
 
-                    while(true)
+                    if (PlacementPtr >= array.Length)
+                        break;
+
+                    while (true)
                     {
-                        if(LeftPtr != null && RightPtr >= max)
-                        {
+                        if (LeftPtr != null && RightPtr >= max)
+                        { // Lower right pointer, comparisons are not done
                             RightPtr = (int)LeftPtr;
                             LeftPtr = null;
                         }
                         else if (PlacementPtr >= RightPtr || RightPtr >= max || RightPtr >= array.Length)
                         {
-                            if(LeftPtr != null)
-                            {
+                            if (LeftPtr != null)
+                            { // last comparison needs to be done
                                 if (array[PlacementPtr].CompareTo(array[(int)LeftPtr]) == 1)
-                                { // swap right
+                                {
                                     Swap(ref array, PlacementPtr, (int)LeftPtr);
                                 }
-                            } 
+                            }
                             break;
                         }
                         else if (LeftPtr != null)
                         {
                             if (array[(int)LeftPtr].CompareTo(array[RightPtr]) == 1)
-                            { // swap right
-                                if (PlacementPtr == LeftPtr) LeftPtr = RightPtr;
+                            {
+                                if (PlacementPtr == LeftPtr)
+                                    LeftPtr = RightPtr;
                                 Swap(ref array, PlacementPtr++, RightPtr++);
                             }
                             else
-                            { // swap left
+                            {
                                 Swap(ref array, PlacementPtr++, (int)LeftPtr++);
-
-                                if (LeftPtr >= RightPtr)
+                                if(LeftPtr + 1 == max)
+                                {
                                     LeftPtr = null;
+                                    continue;
+                                }
+                                if (LeftPtr >= RightPtr)
+                                    LeftPtr--; // revert to Placement pointer
                             }
                         }
                         else if (array[PlacementPtr].CompareTo(array[RightPtr]) == 1)
-                        //else if (array[LeftPtr] > array[RightPtr])
                         {
                             LeftPtr = RightPtr;
                             Swap(ref array, PlacementPtr++, RightPtr++);
@@ -125,7 +132,6 @@ namespace Algorithm
                             PlacementPtr++;
                         }
                     }
-                    LeftPtr = null;
                 }
             }
         }
