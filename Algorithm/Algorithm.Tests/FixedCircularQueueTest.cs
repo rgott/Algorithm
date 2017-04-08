@@ -4,14 +4,14 @@ using System;
 namespace Algorithm.Tests
 {
     [TestClass]
-    public class CircularQueueTest
+    public class FixedCircularQueueTest
     {
-        public CircularOverflowQueue<int> COFQ { get; set; }
+        public FixedCircularQueue<int> COFQ { get; set; }
 
         [TestMethod]
         public void BasicOperations1()
         {
-            COFQ = new CircularOverflowQueue<int>(4);
+            COFQ = new FixedCircularQueue<int>(4);
             COFQ.Enqueue(0);
             COFQ.Enqueue(1);
             COFQ.Enqueue(2);
@@ -26,7 +26,7 @@ namespace Algorithm.Tests
         [TestMethod]
         public void BasicOperations2()
         {
-            COFQ = new CircularOverflowQueue<int>(4);
+            COFQ = new FixedCircularQueue<int>(4);
             COFQ.Enqueue(0);
             COFQ.Enqueue(1);
             COFQ.Enqueue(2);
@@ -48,7 +48,7 @@ namespace Algorithm.Tests
         [TestMethod]
         public void underflow()
         {
-            COFQ = new CircularOverflowQueue<int>(1);
+            COFQ = new FixedCircularQueue<int>(1);
             try
             {
                 COFQ.Dequeue();// should fail
@@ -63,7 +63,7 @@ namespace Algorithm.Tests
         [TestMethod]
         public void overflow()
         {
-            COFQ = new CircularOverflowQueue<int>(2);
+            COFQ = new FixedCircularQueue<int>(2);
             COFQ.Enqueue(1);
             COFQ.Enqueue(2);
             COFQ.Enqueue(3);// should wrap around (pass)
@@ -72,7 +72,7 @@ namespace Algorithm.Tests
         [TestMethod]
         public void mutlipleOverflow()
         {
-            COFQ = new CircularOverflowQueue<int>(2);
+            COFQ = new FixedCircularQueue<int>(2);
             COFQ.Enqueue(1);
             COFQ.Enqueue(2);
             COFQ.Enqueue(3);// All passed this should wrap around (pass)

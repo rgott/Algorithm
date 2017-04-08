@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Algorithm
 {
@@ -6,9 +7,9 @@ namespace Algorithm
     /// OverWrittable circular queue
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class CircularOverflowQueue<T>
+    public class FixedCircularQueue<T>
     {
-        private T[] Items;
+        private readonly T[] Items;
         private int enqueuePos;
         private int dequeuePos;
 
@@ -44,7 +45,7 @@ namespace Algorithm
         /// 
         /// </summary>
         /// <param name="MaxSize">Number of elements can be added to queue. Anything values enqueued over will be overwritten</param>
-        public CircularOverflowQueue(int MaxSize)
+        public FixedCircularQueue(int MaxSize)
         {
             Items = new T[MaxSize];
             this.MaxSize = MaxSize;

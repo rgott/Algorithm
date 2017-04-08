@@ -16,29 +16,22 @@ namespace Algorithm.Tests
             sorted = new int[] { 1, 2, 3, 4};
             Items.Add(new KeyValuePair<int[], int[]>(sorted, unsorted));
 
-            //unsorted = new int[] { 80, 85, 17, 27, 80, 94, 62, 54, 89, 39, 7, 25, 22, 35, 56, 35 };
-            //sorted = new int[] { 7, 17, 22, 25, 27, 35, 35, 39, 54, 56, 62, 80, 80, 85, 89, 94 };
-            //Items.Add(new KeyValuePair<int[], int[]>(sorted, unsorted));
+            unsorted = new int[] { 80, 85, 17, 27, 80, 94, 62, 54, 89, 39, 7, 25, 22, 35, 56, 35 };
+            sorted = new int[] { 7, 17, 22, 25, 27, 35, 35, 39, 54, 56, 62, 80, 80, 85, 89, 94 };
+            Items.Add(new KeyValuePair<int[], int[]>(sorted, unsorted));
+
+            unsorted = new int[] { 16, 12, 14, 15, 13, 1, 3, 2, 4, 5, 7, 6, 8, 9, 11, 10, 19, 18, 17 };
+            sorted = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19 };
+            Items.Add(new KeyValuePair<int[], int[]>(sorted, unsorted));
+
+            unsorted = new int[] { 19, 18, 17 };
+            sorted = new int[] { 17, 18, 19 };
+            Items.Add(new KeyValuePair<int[], int[]>(sorted, unsorted));
 
 
-            //unsorted = new int[] { 16, 12, 14, 15, 13, 1, 3, 2, 4, 5, 7, 6, 8, 9, 11, 10, 19, 18, 17 };
-            //sorted = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19 };
-            //Items.Add(new KeyValuePair<int[], int[]>(sorted, unsorted));
-
-
-            //unsorted = new int[] { 19, 18, 17 };
-            //sorted = new int[] { 17, 18, 19 };
-            //Items.Add(new KeyValuePair<int[], int[]>(sorted, unsorted));
-
-
-            //unsorted = new int[] { 19, 18, 17 };
-            //sorted = new int[] { 17, 18, 19 };
-            //Items.Add(new KeyValuePair<int[], int[]>(sorted, unsorted));
-
-            //unsorted = new string[] { "C", "A", "B", "Z", "M", "L", "V", "F", "E", "D", "X", "Y", "N", "O", "P", "Q" };
-            //sorted = new string[] { "A", "B", "C", "D", "E", "F", "L", "M", "N", "O", "P", "Q", "V", "X", "Y", "Z" };
-            //Items.Add(new KeyValuePair<string[], string[]>(sorted, unsorted));
-
+            unsorted = new int[] { 19, 18, 17 };
+            sorted = new int[] { 17, 18, 19 };
+            Items.Add(new KeyValuePair<int[], int[]>(sorted, unsorted));
 
         }
         private delegate void SortMethod(ref int[] items);
@@ -73,10 +66,5 @@ namespace Algorithm.Tests
             TestArray(Sort<int>.Insertion);
         }
 
-        [TestMethod]
-        public void Merge()
-        {
-            TestArray(Sort<int>.Merge);
-        }
     }
 }
