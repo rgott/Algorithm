@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Algorithm
 {
-    public class StringUtils
+    public static class StringUtils
     {
         /*
         Given a string @value : string, @findIndexes : string[] 
@@ -21,7 +21,7 @@ namespace Algorithm
         /// <param name="value"></param>
         /// <param name="findIndexes"></param>
         /// <returns></returns>
-        public List<string> MultiSplit(string value,ref List<string> findIndexes)
+        public static List<string> MultiSplit(this string value,ref List<string> findIndexes)
         {
             List<string> list = new List<string>();
             while (value.Length != 0)
@@ -65,13 +65,5 @@ namespace Algorithm
 
             return list;
         }
-
-
-
-
-        //public string[] splice(this string[] item,int start,int count)
-        //{
-        //    // starting at start number end ending at start + count remove elements and add to another array
-        //}
     }
 }
