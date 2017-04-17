@@ -21,49 +21,50 @@ namespace Algorithm
         /// <param name="value"></param>
         /// <param name="findIndexes"></param>
         /// <returns></returns>
-        public static List<string> MultiSplit(this string value,ref List<string> findIndexes)
+        public static List<string> MultiSplit(this string input,params string[] findIndexes)
         {
-            List<string> list = new List<string>();
+            string value = input;
+            List<string> indicies = new List<string>(findIndexes);
+            List<string> result = new List<string>();
             while (value.Length != 0)
             {
-                var min = value.Length;
+                var minIndex = value.Length;
                 var minValue = "";
 
                 // finds minimum index in the findIndexes array
-                for (var i = 0; i < findIndexes.Count; i++)
+                for (var i = 0; i < indicies.Count; i++)
                 {// find minimum
-                    var index = value.IndexOf(findIndexes[i]);
+                    var index = value.IndexOf(indicies[i]);
                     if (index == -1)
                     {
-
-                        findIndexes.RemoveAt(i); // remove element
+                        indicies.RemoveAt(i); // remove element
                         i--; // reset to previous
                         continue;
                     }
-                    else if (index < min)
+                    else if(minIndex > index) // if found lower
                     {
-                        minValue = findIndexes[i];
-                        min = index;
+                        minIndex = index;
+                        minValue = indicies[i];
                     }
                 }
-                if (findIndexes.Count == 0)
+                if (indicies.Count == 0)
                     break;
 
-                var retVal = value.Substring(0, min).Trim(); // get left side
+                var retVal = value.Substring(0, minIndex).Trim(); // get left side
                 if (!String.IsNullOrEmpty(retVal))
                 {
-                    list.Add(retVal);
+                    result.Add(retVal);
                 }
 
-                var minV = min + minValue.Length;
-                value = value.Substring(minV, value.Length);
+                var minV = minIndex + minValue.Length;
+                value = value.Substring(minV, value.Length - minV);
             }
             if (!String.IsNullOrEmpty(value.Trim()))
             {
-                list.Add(value.Trim());
+                result.Add(value.Trim());
             }
 
-            return list;
+            return result;
         }
     }
 }
