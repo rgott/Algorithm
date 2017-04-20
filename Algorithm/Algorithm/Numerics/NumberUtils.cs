@@ -4,7 +4,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Numerics;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Algorithm.Numerics
 {
@@ -15,6 +14,11 @@ namespace Algorithm.Numerics
             return ConvertToNumber(Number.Split(splitOn));
         }
 
+        /// <summary>
+        /// Convert a word to a number
+        /// </summary>
+        /// <param name="NumberChunk">Section of a number word e.g. One-Hundred is two chunks [One, Hundred]</param>
+        /// <returns></returns>
         public static BigInteger ConvertToNumber(string[] NumberChunk)
         {
             var total = BigInteger.Zero;
@@ -75,20 +79,49 @@ namespace Algorithm.Numerics
             {
                 return RconvertToWord(number / 100) + higher.ElementAt(0).Key + "-" + RconvertToWord(number % 100);
             }
-            else //if (number > 99 }
+            else //if (number > 999)
             {
-                short segmentCount = (short)Math.Ceiling(number.ToString().Length / 3.0); // total number of segments 10,030,003 => 3 segments
+                var totalSegmentCount = (int)Math.Ceiling(number.ToString().Length / 3.0); // total number of segments 10,030,003 => 3 segments
 
-                // length of number minus the latter segments e.g. num 10,030,003 => 8("10,030,003" } - 6("030,003" } = 2
-                short firstSegmentSize = (short)(number.ToString().Length - (3 * (segmentCount - 1)));
+                BigInteger NumberInLeftSegment; // compute value in left most segment
+                {
+                    // length of number minus the latter segments e.g. num 10,030,003 => 8("10,030,003" } - 6("030,003" } = 2
+                    var leftSegmentSize = number.ToString().Length - (3 * (totalSegmentCount - 1));
 
-                string segment = number.ToString().Substring(0, firstSegmentSize); // get first segment
-                BigInteger numSegment = BigInteger.Parse(segment); // parse to int
+                    var leftSegment = number.ToString().Substring(0, leftSegmentSize); // get first segment
+                    NumberInLeftSegment = BigInteger.Parse(leftSegment); // max of 3 segments or 999
+                }
 
-                BigInteger retSize = number - ((ulong)numSegment * (ulong)Math.Pow(10, 3 * (segmentCount - 1)));
-                return RconvertToWord(numSegment) + higher.ElementAt(segmentCount - 1).Key + "-" + RconvertToWord(retSize);
+                var retSize = number - (NumberInLeftSegment * BigInteger.Pow(10, 3 * (totalSegmentCount - 1))); // remove left segment
+
+                var aboveHigherValues = new Stack<string>();
+                var maxSet = higher.Last().Value;
+                var numOfZeros = (totalSegmentCount - 1) * 3;
+                while (numOfZeros > 0)
+                {
+                    if (numOfZeros > maxSet)
+                    {
+                        aboveHigherValues.Push(higher.Last().Key);
+
+                        numOfZeros -= maxSet;
+                        continue;
+                    }
+
+                    var value = higher.FirstOrDefault(m => m.Value >= numOfZeros);
+
+                    aboveHigherValues.Push(value.Key);
+                    numOfZeros -= value.Value;
+                }
+
+                var sb = new StringBuilder();
+                while(aboveHigherValues.Count > 0)
+                {
+                    sb.Append(aboveHigherValues.Pop());
+                    sb.Append('-');
+                }
+
+                return RconvertToWord(NumberInLeftSegment) + sb.ToString() + RconvertToWord(retSize);
             }
-
         }
     }
 }

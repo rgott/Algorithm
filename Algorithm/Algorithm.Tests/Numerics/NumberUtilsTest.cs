@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Numerics;
 using Algorithm.Numerics;
-using System.Linq.Expressions;
+using System.IO;
 
 namespace Algorithm.Tests.Numerics
 {
@@ -59,6 +59,20 @@ namespace Algorithm.Tests.Numerics
         }
 
         [TestMethod]
+        public void ConvertToNumberOne_Million_CentillionTest()
+        {
+            if(BigInteger.TryParse("1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+                out var result))
+            {
+                Assert.AreEqual("One-Million-Centillion",NumberUtils.ConvertToWord(result));
+            }
+            else
+            {
+                Assert.Fail();
+            }
+        }
+
+        [TestMethod]
         public void ConvertToWord10Test()
         {
             Assert.AreEqual("Ten", NumberUtils.ConvertToWord(new BigInteger(10)));
@@ -89,7 +103,5 @@ namespace Algorithm.Tests.Numerics
         {
             Assert.AreEqual("Five-Hundred-One", NumberUtils.ConvertToWord(new BigInteger(501)));
         }
-
-        
     }
 }

@@ -54,7 +54,7 @@ namespace Algorithm.Tests
                 COFQ.Dequeue();// should fail
                 Assert.Fail();
             }
-            catch (IndexOutOfRangeException e)
+            catch (IndexOutOfRangeException)
             {
                 // passed test
             }
