@@ -49,6 +49,13 @@ namespace Algorithm.Numerics
             return total;
         }
 
+        /// <summary>
+        /// Converts a number e.g. "100" into a the word form "One-Hundred"
+        /// </summary>
+        /// <param name="number">Number to convert into a string word of that number.</param>
+        /// <exception cref="StackOverflowException">Large numbers can cause recursion to fail.</exception>
+        /// <exception cref="OutOfMemoryException">Large numbers can use all CLR memory.</exception>
+        /// <returns>string representation of the number.</returns>
         public static string ConvertToWord(BigInteger number)
         {
             if (number <= 19)
@@ -57,11 +64,16 @@ namespace Algorithm.Numerics
             }
             else
             {
-                return RconvertToWord(number).TrimEnd('-');
+                return Rec_ConvertToWord(number).TrimEnd('-');
             }
         }
 
-        private static string RconvertToWord(BigInteger number)
+        /// <summary>
+        /// Recursive Function used in <see cref="ConvertToWord(BigInteger)"/>
+        /// </summary>
+        /// <param name="number"></param>
+        /// <returns></returns>
+        private static string Rec_ConvertToWord(BigInteger number)
         {
             if (number == 0)
             {
@@ -73,16 +85,16 @@ namespace Algorithm.Numerics
             }
             else if (number <= 99)
             {
-                return lower.FirstOrDefault(n => n.Value == (number / 10 * 10)).Key + "-" + RconvertToWord(number % 10);
+                return lower.FirstOrDefault(n => n.Value == (number / 10 * 10)).Key + "-" + Rec_ConvertToWord(number % 10);
             }
             else if (number <= 999)
             {
-                return RconvertToWord(number / 100) + higher.ElementAt(0).Key + "-" + RconvertToWord(number % 100);
+                return Rec_ConvertToWord(number / 100) + higher.ElementAt(0).Key + "-" + Rec_ConvertToWord(number % 100);
             }
             else //if (number > 999)
             {
-                var totalSegmentCount = (int)Math.Ceiling(number.ToString().Length / 3.0); // total number of segments 10,030,003 => 3 segments
 
+                var totalSegmentCount = (int)Math.Ceiling(number.ToString().Length / 3.0); // total number of segments 10,030,003 => 3 segments
                 BigInteger NumberInLeftSegment; // compute value in left most segment
                 {
                     // length of number minus the latter segments e.g. num 10,030,003 => 8("10,030,003" } - 6("030,003" } = 2
@@ -120,7 +132,7 @@ namespace Algorithm.Numerics
                     sb.Append('-');
                 }
 
-                return RconvertToWord(NumberInLeftSegment) + sb.ToString() + RconvertToWord(retSize);
+                return Rec_ConvertToWord(NumberInLeftSegment) + sb.ToString() + Rec_ConvertToWord(retSize);
             }
         }
     }
