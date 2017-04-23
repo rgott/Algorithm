@@ -27,7 +27,7 @@ namespace Algorithm
         /// <summary>
         /// Set array behind the scenes
         /// </summary>
-        /// <param name="index"></param>
+        /// <param name="index">0 index position.</param>
         /// <returns>Value at index.</returns>
         public T this[int index]
         {
