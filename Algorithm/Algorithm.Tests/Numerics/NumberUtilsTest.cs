@@ -103,5 +103,17 @@ namespace Algorithm.Tests.Numerics
         {
             Assert.AreEqual("Five-Hundred-One", NumberUtils.ConvertToWord(new BigInteger(501)));
         }
+
+        [TestMethod]
+        public void ConvertToWordNegative13Test()
+        {
+            Assert.AreEqual("Negative-Thirteen", NumberUtils.ConvertToWord(new BigInteger(-13)));
+        }
+
+        [TestMethod]
+        public void ConvertToWordNegative6543Test()
+        {
+            Assert.AreEqual("Negative-Six-Thousand-Five-Hundred-Fourty-Three", NumberUtils.ConvertToWord(new BigInteger(-6543)));
+        }
     }
 }

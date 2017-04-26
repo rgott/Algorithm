@@ -24,9 +24,16 @@ namespace Algorithm.Numerics
             var total = BigInteger.Zero;
 
             var _sto = BigInteger.Zero;
-            for (int i = 0; i < NumberChunk.Length; i++)
+
+            var start = 0;
+            if(true == NumberChunk[0]?.Equals("Negative"))
             {
-                if (lower.TryGetValue(NumberChunk[i], out var lowerNum))
+                start = 1;
+            }
+
+            for (int i = start; i < NumberChunk.Length; i++)
+            {
+                if (Lower.TryGetValue(NumberChunk[i], out var lowerNum))
                 {
                     // if here again then count number
                     total += _sto;
@@ -34,7 +41,7 @@ namespace Algorithm.Numerics
                     // here then number
                     _sto = lowerNum;
                 }
-                else if (higher.TryGetValue(NumberChunk[i], out var higherNum))
+                else if (Higher.TryGetValue(NumberChunk[i], out var higherNum))
                 {
                     // multiply previous number
                     var zeroHolder = BigInteger.Pow(new BigInteger(10), higherNum);
@@ -46,6 +53,12 @@ namespace Algorithm.Numerics
                 }
             }
             total += _sto;
+
+            if(1 == start)
+            {
+                total *= -1;
+            }
+
             return total;
         }
 
@@ -58,9 +71,9 @@ namespace Algorithm.Numerics
         /// <returns>string representation of the number.</returns>
         public static string ConvertToWord(BigInteger number)
         {
-            if (number <= 19)
+            if (number < 0)
             {
-                return lower.FirstOrDefault(n => n.Value == number).Key;
+                return "Negative-" + Rec_ConvertToWord(number * -1).TrimEnd('-');
             }
             else
             {
@@ -81,15 +94,15 @@ namespace Algorithm.Numerics
             }
             if (number <= 19)
             {
-                return lower.FirstOrDefault(n => n.Value == number).Key + "-";
+                return Lower.FirstOrDefault(n => n.Value == number).Key + "-";
             }
             else if (number <= 99)
             {
-                return lower.FirstOrDefault(n => n.Value == (number / 10 * 10)).Key + "-" + Rec_ConvertToWord(number % 10);
+                return Lower.FirstOrDefault(n => n.Value == (number / 10 * 10)).Key + "-" + Rec_ConvertToWord(number % 10);
             }
             else if (number <= 999)
             {
-                return Rec_ConvertToWord(number / 100) + higher.ElementAt(0).Key + "-" + Rec_ConvertToWord(number % 100);
+                return Rec_ConvertToWord(number / 100) + Higher.ElementAt(0).Key + "-" + Rec_ConvertToWord(number % 100);
             }
             else //if (number > 999)
             {
@@ -107,19 +120,19 @@ namespace Algorithm.Numerics
                 var retSize = number - (NumberInLeftSegment * BigInteger.Pow(10, 3 * (totalSegmentCount - 1))); // remove left segment
 
                 var aboveHigherValues = new Stack<string>();
-                var maxSet = higher.Last().Value;
+                var maxSet = Higher.Last().Value;
                 var numOfZeros = (totalSegmentCount - 1) * 3;
                 while (numOfZeros > 0)
                 {
                     if (numOfZeros > maxSet)
                     {
-                        aboveHigherValues.Push(higher.Last().Key);
+                        aboveHigherValues.Push(Higher.Last().Key);
 
                         numOfZeros -= maxSet;
                         continue;
                     }
 
-                    var value = higher.FirstOrDefault(m => m.Value >= numOfZeros);
+                    var value = Higher.FirstOrDefault(m => m.Value >= numOfZeros);
 
                     aboveHigherValues.Push(value.Key);
                     numOfZeros -= value.Value;
