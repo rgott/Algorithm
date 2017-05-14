@@ -7,25 +7,25 @@ namespace Algorithm.FSharp.Tests
     public class StringUtilsTest
     {
         [TestMethod]
-        public void IsPalindrometrueOddTest()
+        public void IsPalindromeTrueOddTest()
         {
             Assert.IsTrue(StringUtils.IsPalindrome("racecar"));
         }
 
         [TestMethod]
-        public void IsPalindromefalseOddTest()
+        public void IsPalindromeFalseOddTest()
         {
             Assert.IsFalse(StringUtils.IsPalindrome("racecam"));
         }
 
         [TestMethod]
-        public void IsPalindrometrueEvenTest()
+        public void IsPalindromeTrueEvenTest()
         {
             Assert.IsTrue(StringUtils.IsPalindrome("ABBA"));
         }
 
         [TestMethod]
-        public void IsPalindromefalseEvenTest()
+        public void IsPalindromeFalseEvenTest()
         {
             Assert.IsFalse(StringUtils.IsPalindrome("ABBB"));
         }

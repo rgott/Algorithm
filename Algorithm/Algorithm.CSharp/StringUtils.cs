@@ -118,5 +118,20 @@ namespace Algorithm.CSharp
 
             return (result, splitOnIndecies);
         }
+
+        public static bool IsPalindromeLinq(string word)
+        {
+            return word.SequenceEqual(word.Reverse());
+        }
+
+        public static bool IsPalindromeLoop(string word)
+        {
+            for (int i = 0; i < word.Length / 2; i++)
+            {
+                if(word[i] != word[word.Length - i - 1])
+                    return false;
+            }
+            return true;
+        }
     }
 }
