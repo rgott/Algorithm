@@ -12,6 +12,7 @@ namespace Algorithm.CSharp.Numerics
     {
         const char wordSeparator = ' ';
         const char wordJoiner = '-';
+        const string HigherNumberSeparator = ", ";
 
         public static BigInteger ConvertToNumber(string Number, char splitOn = wordJoiner)
         {
@@ -132,51 +133,73 @@ namespace Algorithm.CSharp.Numerics
         /// first needs to be determined. E.G. is the comma of the number 
         /// one,two or three places away from the first comma of the number
         /// </param>
-        public static void StreamConvertToWord(Stream inputNumber,TextWriter output, int inputLength)
+        public static void StreamConvertToWord(Stream inputNumber, TextWriter output, int inputLength)
         {
-            var start = (3 - (inputLength % 3)) % 3;
             var segmentBuffer = new byte[3];
-            inputNumber.Read(segmentBuffer, start, 1);
-            inputLength--;
 
-            var segments = inputLength % 3;
-            inputLength -= segments;
-
-            if (Contains(ref segmentBuffer, b => b == (byte)'-'))
+            var fillResult = FillFirstSegment(ref segmentBuffer,inputLength);
+            inputLength -= fillResult.TakenLength;
+            
+            if (fillResult.IsNegative)
             {
                 output.Write("Negative");
                 output.Write(wordSeparator);
+            }
 
-                segmentBuffer[start] = 0;
-                inputNumber.Read(segmentBuffer, start + 1, segments);
-            }
-            else
-            {
-                inputNumber.Read(segmentBuffer, start + 1, segments++);
-            }
             ConvertCharToByte(ref segmentBuffer);
-
-            if(!Contains(ref segmentBuffer, b => b != 0))
+            if (!Contains(ref segmentBuffer, b => b != 0))
             {
                 output.Write("Zero");
                 return;
             }
-
             SegmentToStringLower(ref segmentBuffer, output, inputLength);
 
             while(inputLength > 0)
             {
                 inputNumber.Read(segmentBuffer, 0, 3);
                 ConvertCharToByte(ref segmentBuffer);
-                if (segmentBuffer[0] != 0)
+
+                if (!Contains(ref segmentBuffer, b => b != 0))
                 {
-                    output.Write(", ");
-                    SegmentToStringLower(ref segmentBuffer, output, inputLength -= 3);
+                    inputLength -= 3;
+                    continue;
+                }
+
+                output.Write(HigherNumberSeparator);
+                SegmentToStringLower(ref segmentBuffer, output, inputLength -= 3);
+            }
+
+            (bool IsNegative, int TakenLength) FillFirstSegment(ref byte[] buffer, int length)
+            {
+                bool IsNegative = false;
+                var start = (3 - (length % 3)) % 3;
+                inputNumber.Read(segmentBuffer, start, 1);
+                length--;
+
+                var segments = length % 3;
+                length -= segments;
+
+
+                var retSegment = 3 - start;
+                if (Contains(ref segmentBuffer, b => b == (byte)'-'))
+                {
+                    IsNegative = true;
+
+                    segmentBuffer[start] = 0;
+                    if (start == 2)
+                    { // start is at end read more
+                        retSegment += FillFirstSegment(ref buffer, length).TakenLength;
+                    }
+                    else
+                    {
+                        inputNumber.Read(segmentBuffer, start + 1, segments);
+                    }
                 }
                 else
                 {
-                    break;
+                    inputNumber.Read(segmentBuffer, start + 1, segments);
                 }
+                return (IsNegative, retSegment);
             }
         }
 

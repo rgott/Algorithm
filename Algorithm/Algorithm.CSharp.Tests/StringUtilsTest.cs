@@ -13,7 +13,7 @@ namespace Algorithm.CSharp.Tests
         [TestMethod]
         public void MultiSplitTest()
         {
-            CollectionAssert.AreEqual(new List<string> { "10", "20", "30", "40" },"10 , 20 - 30 / 40".MultiSplit(",", "-", "/"));
+            CollectionAssert.AreEqual(new List<string> { "10", "20", "30", "40" }, "10 , 20 - 30 / 40".MultiSplit(",", "-", "/"));
         }
 
         #region IsPalindromeLinq
@@ -60,7 +60,7 @@ namespace Algorithm.CSharp.Tests
         public void IsPalindromeLoopTalseEvenTest()
         {
             Assert.IsFalse(StringUtils.IsPalindromeLinq("ABBB"));
-        } 
+        }
         #endregion
 
     }

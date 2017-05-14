@@ -116,6 +116,13 @@ namespace Algorithm.CSharp.Tests.Numerics
         {
             Assert.AreEqual("One Hundred Million", NumberUtils.ConvertToWord(new BigInteger(100_000_000)));
         }
+
+        [TestMethod]
+        public void ConvertToWordNegative100_000_006Test()
+        {
+            Assert.AreEqual("Negative One Hundred Million, Six", NumberUtils.ConvertToWord(new BigInteger(-100_000_006)));
+        }
+
         [TestMethod]
         public void ConvertToWord501Test()
         {
