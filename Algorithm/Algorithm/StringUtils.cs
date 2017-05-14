@@ -12,14 +12,14 @@ namespace Algorithm
         Given a string @value : string, @findIndexes : string[] 
         will find all values on either side
         and return the operands as an array 
-        */  
+        */
         /// <summary>
         /// 
         /// </summary>
         /// <param name="value"></param>
         /// <param name="findIndexes"></param>
         /// <returns></returns>
-        public static List<string> MultiSplit(this string input,params string[] findIndexes)
+        public static List<string> MultiSplit(this string input, params string[] findIndexes)
         {
             string value = input;
             List<string> indicies = new List<string>(findIndexes);
@@ -39,7 +39,7 @@ namespace Algorithm
                         i--; // reset to previous
                         continue;
                     }
-                    else if(minIndex > index) // if found lower
+                    else if (minIndex > index) // if found lower
                     {
                         minIndex = index;
                         minValue = indicies[i];

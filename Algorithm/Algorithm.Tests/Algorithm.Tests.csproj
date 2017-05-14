@@ -53,6 +53,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="FixedCircularQueueTest.cs" />
+    <Compile Include="Linq\StreamLinq.cs" />
     <Compile Include="MapTest.cs" />
     <Compile Include="Numerics\NumberUtilsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -6,7 +6,7 @@ namespace Algorithm.Numerics
 {
     public partial class NumberUtils
     {
-        static readonly Dictionary<string, int> Lower = new Dictionary<string, int>() {
+        static readonly Map<string, int> Lower = new Map<string, int>() {
              { "Zero", 0 }
             ,{ "One", 1 }
             ,{ "Two", 2 }
@@ -36,7 +36,7 @@ namespace Algorithm.Numerics
             ,{ "Eighty",80 }
             ,{ "Ninety",90 }};
 
-        static readonly Dictionary<string, int> Higher = new Dictionary<string, int>(){
+        static readonly Map<string, int> Higher = new Map<string, int>(){
              { "Hundred", 2 }
             ,{ "Thousand",3 }
             ,{ "Million",6 }

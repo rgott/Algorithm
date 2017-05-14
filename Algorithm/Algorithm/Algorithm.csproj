@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FixedCircularQueue.cs" />
+    <Compile Include="Linq\Stream.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="Numerics\NumberUtils.cs" />
     <Compile Include="Numerics\NumberUtils_Partial_NumberArrays.cs" />

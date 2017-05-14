@@ -12,47 +12,53 @@ namespace Algorithm.Tests.Numerics
         [TestMethod]
         public void ConvertToNumber100Test()
         {
-            Assert.AreEqual(new BigInteger(100), NumberUtils.ConvertToNumber("One-Hundred"));
+            Assert.AreEqual(100, NumberUtils.ConvertToNumber("One Hundred"));
+        }
+
+        [TestMethod]
+        public void ConvertToNumberNegative100Test()
+        {
+            Assert.AreEqual(-100, NumberUtils.ConvertToNumber("Negative One Hundred"));
         }
 
         [TestMethod]
         public void ConvertToNumber1_240Test()
         {
-            Assert.AreEqual(new BigInteger(1_240), NumberUtils.ConvertToNumber("One-Thousand-Two-Hundred-Fourty"));
+            Assert.AreEqual(1_240, NumberUtils.ConvertToNumber("One Thousand, Two Hundred Fourty"));
         }
 
         [TestMethod]
         public void ConvertToNumber14_006Test()
         {
-            Assert.AreEqual(new BigInteger(14_006), NumberUtils.ConvertToNumber("Fourteen-Thousand-Six"));
+            Assert.AreEqual(14_006, NumberUtils.ConvertToNumber("Fourteen Thousand, Six"));
         }
 
         [TestMethod]
         public void ConvertToNumber100_000_000Test()
         {
-            Assert.AreEqual(new BigInteger(100_000_000), NumberUtils.ConvertToNumber("One-Hundred-Million"));
+            Assert.AreEqual(100_000_000, NumberUtils.ConvertToNumber("One Hundred Million"));
         }
 
         [TestMethod]
         public void ConvertToNumber96Test()
         {
-            Assert.AreEqual(new BigInteger(96), NumberUtils.ConvertToNumber("Ninety-Six"));
+            Assert.AreEqual(96, NumberUtils.ConvertToNumber("Ninety-Six"));
         }
 
         [TestMethod]
         public void ConvertToNumber16Test()
         {
-            Assert.AreEqual(new BigInteger(16), NumberUtils.ConvertToNumber("Sixteen"));
+            Assert.AreEqual(16, NumberUtils.ConvertToNumber("Sixteen"));
         }
         [TestMethod]
         public void ConvertToNumber3Test()
         {
-            Assert.AreEqual(new BigInteger(3), NumberUtils.ConvertToNumber("Three"));
+            Assert.AreEqual(3, NumberUtils.ConvertToNumber("Three"));
         }
         [TestMethod]
         public void ConvertToNumberCentillionTest()
         {
-            string str = NumberUtils.ConvertToNumber("One-Centillion").ToString();
+            string str = NumberUtils.ConvertToNumber("One Centillion").ToString();
             Assert.AreEqual(
                 "1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000", 
                 str.ToString());
@@ -64,12 +70,18 @@ namespace Algorithm.Tests.Numerics
             if(BigInteger.TryParse("1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
                 out var result))
             {
-                Assert.AreEqual("One-Million-Centillion",NumberUtils.ConvertToWord(result));
+                Assert.AreEqual("One Million Centillion",NumberUtils.ConvertToWord(result));
             }
             else
             {
                 Assert.Fail();
             }
+        }
+
+        [TestMethod]
+        public void ConvertToWord0Test()
+        {
+            Assert.AreEqual("Zero", NumberUtils.ConvertToWord(new BigInteger(0)));
         }
 
         [TestMethod]
@@ -79,9 +91,15 @@ namespace Algorithm.Tests.Numerics
         }
 
         [TestMethod]
+        public void ConvertToWordNegative10Test()
+        {
+            Assert.AreEqual("Negative Ten", NumberUtils.ConvertToWord(new BigInteger(-10)));
+        }
+
+        [TestMethod]
         public void ConvertToWord317Test()
         {
-            Assert.AreEqual("Three-Hundred-Seventeen", NumberUtils.ConvertToWord(new BigInteger(317)));
+            Assert.AreEqual("Three Hundred Seventeen", NumberUtils.ConvertToWord(new BigInteger(317)));
         }
         [TestMethod]
         public void ConvertToWord96Test()
@@ -96,24 +114,24 @@ namespace Algorithm.Tests.Numerics
         [TestMethod]
         public void ConvertToWord100_000_000Test()
         {
-            Assert.AreEqual("One-Hundred-Million", NumberUtils.ConvertToWord(new BigInteger(100_000_000)));
+            Assert.AreEqual("One Hundred Million", NumberUtils.ConvertToWord(new BigInteger(100_000_000)));
         }
         [TestMethod]
         public void ConvertToWord501Test()
         {
-            Assert.AreEqual("Five-Hundred-One", NumberUtils.ConvertToWord(new BigInteger(501)));
+            Assert.AreEqual("Five Hundred One", NumberUtils.ConvertToWord(new BigInteger(501)));
         }
 
         [TestMethod]
         public void ConvertToWordNegative13Test()
         {
-            Assert.AreEqual("Negative-Thirteen", NumberUtils.ConvertToWord(new BigInteger(-13)));
+            Assert.AreEqual("Negative Thirteen", NumberUtils.ConvertToWord(new BigInteger(-13)));
         }
 
         [TestMethod]
         public void ConvertToWordNegative6543Test()
         {
-            Assert.AreEqual("Negative-Six-Thousand-Five-Hundred-Fourty-Three", NumberUtils.ConvertToWord(new BigInteger(-6543)));
+            Assert.AreEqual("Negative Six Thousand, Five Hundred Fourty-Three", NumberUtils.ConvertToWord(new BigInteger(-6543)));
         }
     }
 }

@@ -5,6 +5,14 @@ using System.Linq;
 
 namespace Algorithm
 {
+    /// <summary>
+    /// Doubly Linked Dictionary. Dictionary where both keys and values can be searched for efficiently.
+    /// 
+    /// Pros: Faster searching
+    /// Cons: Uses atleast twice the memory
+    /// </summary>
+    /// <typeparam name="K">Key</typeparam>
+    /// <typeparam name="V">Value</typeparam>
     public class Map<K, V> : IDictionary<K, V>
     {
         public Map()
@@ -115,8 +123,6 @@ namespace Algorithm
         {
             throw new NotImplementedException();
         }
-
-        
 
         public bool Remove(K key)
         {

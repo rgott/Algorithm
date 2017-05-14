@@ -1,17 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Numerics;
 using System.Text;
+using Algorithm.Linq;
 
 namespace Algorithm.Numerics
 {
     public partial class NumberUtils
     {
-        public static BigInteger ConvertToNumber(string Number, char splitOn = '-')
+        const char wordSeparator = ' ';
+        const char wordJoiner = '-';
+
+        public static BigInteger ConvertToNumber(string Number, char splitOn = wordJoiner)
         {
-            return ConvertToNumber(Number.Split(splitOn));
+            return ConvertToNumber(new MemoryStream(Encoding.ASCII.GetBytes(Number)));
+        }
+
+        public static BigInteger ConvertToNumber(Stream inputNumber)
+        {
+            return ConvertToNumber(inputNumber.Take(b => "- ,".IndexOf((char)b) != -1));
         }
 
         /// <summary>
@@ -19,21 +28,18 @@ namespace Algorithm.Numerics
         /// </summary>
         /// <param name="NumberChunk">Section of a number word e.g. One-Hundred is two chunks [One, Hundred]</param>
         /// <returns></returns>
-        public static BigInteger ConvertToNumber(string[] NumberChunk)
+        public static BigInteger ConvertToNumber(IEnumerable<string> NumberChunk)
         {
             var total = BigInteger.Zero;
 
             var _sto = BigInteger.Zero;
+            var tmp = NumberChunk;
 
-            var start = 0;
-            if(true == NumberChunk[0]?.Equals("Negative"))
-            {
-                start = 1;
-            }
+            var isNegative = false;
 
-            for (int i = start; i < NumberChunk.Length; i++)
+            foreach (var item in NumberChunk)
             {
-                if (Lower.TryGetValue(NumberChunk[i], out var lowerNum))
+                if (Lower.TryGetValue(item, out var lowerNum))
                 {
                     // if here again then count number
                     total += _sto;
@@ -41,7 +47,7 @@ namespace Algorithm.Numerics
                     // here then number
                     _sto = lowerNum;
                 }
-                else if (Higher.TryGetValue(NumberChunk[i], out var higherNum))
+                else if (Higher.TryGetValue(item, out var higherNum))
                 {
                     // multiply previous number
                     var zeroHolder = BigInteger.Pow(new BigInteger(10), higherNum);
@@ -51,15 +57,31 @@ namespace Algorithm.Numerics
 
                     _sto = BigInteger.Multiply(zeroHolder, _sto);
                 }
+                else if(item.Equals("Negative"))
+                {
+                    isNegative = true;
+                }
             }
             total += _sto;
 
-            if(1 == start)
-            {
+            if(isNegative)
                 total *= -1;
-            }
 
             return total;
+        }
+
+
+        public static string ConvertToWord(int number)
+        {
+            return ConvertToWord(number.ToString());
+        }
+        public static string ConvertToWord(BigInteger number)
+        {
+            return ConvertToWord(number.ToString());
+        }
+        public static string ConvertToWord(long number)
+        {
+            return ConvertToWord(number.ToString());
         }
 
         /// <summary>
@@ -69,83 +91,208 @@ namespace Algorithm.Numerics
         /// <exception cref="StackOverflowException">Large numbers can cause recursion to fail.</exception>
         /// <exception cref="OutOfMemoryException">Large numbers can use all CLR memory.</exception>
         /// <returns>string representation of the number.</returns>
-        public static string ConvertToWord(BigInteger number)
+        public static string ConvertToWord(String number)
         {
-            if (number < 0)
+            var sb = new StringBuilder();
+
+            StreamConvertToWord(
+                new MemoryStream(Encoding.ASCII.GetBytes(number)),
+                new StringWriter(sb), 
+                number.Length);
+            return sb.ToString();   
+        }
+
+        public static BigInteger CountCharactersInStream(string file, int chunkSize = 1014)
+        {
+            using (var stream = File.Open(file, FileMode.Open))
             {
-                return "Negative-" + Rec_ConvertToWord(number * -1).TrimEnd('-');
-            }
-            else
-            {
-                return Rec_ConvertToWord(number).TrimEnd('-');
+                var buffer = new byte[chunkSize];
+                BigInteger count = 0;
+                while (stream.CanRead)
+                {
+                    var currentRead = stream.Read(buffer, 0, buffer.Length);
+                    count += currentRead;
+
+                    if(currentRead != chunkSize)
+                        break;
+                }
+                return count;
             }
         }
 
         /// <summary>
-        /// Recursive Function used in <see cref="ConvertToWord(BigInteger)"/>
+        /// Numbers that are too large to be converted into a word in memory can be streamed in via a text file.
         /// </summary>
-        /// <param name="number"></param>
-        /// <returns></returns>
-        private static string Rec_ConvertToWord(BigInteger number)
+        /// <param name="inputNumber">Number or File that contains the number to be converted into a word</param>
+        /// <param name="output">
+        /// Output that allows number to be written to the file while being created to save memory.
+        /// </param>
+        /// <param name="inputLength">
+        /// Stream will need to be counted first since the position of the segment
+        /// first needs to be determined. E.G. is the comma of the number 
+        /// one,two or three places away from the first comma of the number
+        /// </param>
+        public static void StreamConvertToWord(Stream inputNumber,TextWriter output, int inputLength)
         {
-            if (number == 0)
-            {
-                return "";
-            }
-            if (number <= 19)
-            {
-                return Lower.FirstOrDefault(n => n.Value == number).Key + "-";
-            }
-            else if (number <= 99)
-            {
-                return Lower.FirstOrDefault(n => n.Value == (number / 10 * 10)).Key + "-" + Rec_ConvertToWord(number % 10);
-            }
-            else if (number <= 999)
-            {
-                return Rec_ConvertToWord(number / 100) + Higher.ElementAt(0).Key + "-" + Rec_ConvertToWord(number % 100);
-            }
-            else //if (number > 999)
-            {
+            var start = (3 - (inputLength % 3)) % 3;
+            var segmentBuffer = new byte[3];
+            inputNumber.Read(segmentBuffer, start, 1);
+            inputLength--;
 
-                var totalSegmentCount = (int)Math.Ceiling(number.ToString().Length / 3.0); // total number of segments 10,030,003 => 3 segments
-                BigInteger NumberInLeftSegment; // compute value in left most segment
+            var segments = inputLength % 3;
+            inputLength -= segments;
+
+            if (Contains(ref segmentBuffer, b => b == (byte)'-'))
+            {
+                output.Write("Negative");
+                output.Write(wordSeparator);
+
+                segmentBuffer[start] = 0;
+                inputNumber.Read(segmentBuffer, start + 1, segments);
+            }
+            else
+            {
+                inputNumber.Read(segmentBuffer, start + 1, segments++);
+            }
+            ConvertCharToByte(ref segmentBuffer);
+
+            if(!Contains(ref segmentBuffer, b => b != 0))
+            {
+                output.Write("Zero");
+                return;
+            }
+
+            SegmentToStringLower(ref segmentBuffer, output, inputLength);
+
+            while(inputLength > 0)
+            {
+                inputNumber.Read(segmentBuffer, 0, 3);
+                ConvertCharToByte(ref segmentBuffer);
+                if (segmentBuffer[0] != 0)
                 {
-                    // length of number minus the latter segments e.g. num 10,030,003 => 8("10,030,003" } - 6("030,003" } = 2
-                    var leftSegmentSize = number.ToString().Length - (3 * (totalSegmentCount - 1));
-
-                    var leftSegment = number.ToString().Substring(0, leftSegmentSize); // get first segment
-                    NumberInLeftSegment = BigInteger.Parse(leftSegment); // max of 3 segments or 999
+                    output.Write(", ");
+                    SegmentToStringLower(ref segmentBuffer, output, inputLength -= 3);
                 }
+                else
+                {
+                    break;
+                }
+            }
+        }
 
-                var retSize = number - (NumberInLeftSegment * BigInteger.Pow(10, 3 * (totalSegmentCount - 1))); // remove left segment
+        public static bool Contains(ref byte[] buffer, Func<byte,bool> predicate)
+        {
+            for (int i = 0; i < buffer.Length; i++)
+            {
+                if(predicate(buffer[i]))
+                    return true;
+            }
+            return false;
+        }
 
-                var aboveHigherValues = new Stack<string>();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="inputNumber">buffer length 3</param>
+        /// <param name="segmentNum"></param>
+        /// <returns></returns>
+        private static void SegmentToStringLower(ref byte[] segmentBuffer, TextWriter outputStream, int zerosAfterCurrentSegment)
+        {
+            if(segmentBuffer[0] != 0)
+            { // 100 - 900 -> hundredths place
+                outputStream.Write(Lower[segmentBuffer[0]]);
+                outputStream.Write(wordSeparator);
+                outputStream.Write(Higher.First().Key);
+
+                if(segmentBuffer[1] != 0 || segmentBuffer [2] != 0)
+                    outputStream.Write(wordSeparator);
+            }
+            if (segmentBuffer[1] != 0)
+            { // 10 - 99
+                segmentBuffer[1] *= 10;
+                if (segmentBuffer[1] == 10)
+                { // 10 - 19
+                    outputStream.Write(Lower[segmentBuffer[1] + segmentBuffer[2]]);
+                }
+                else
+                { // 20 - 99
+                    outputStream.Write(Lower[segmentBuffer[1]]);
+                    outputStream.Write(wordJoiner);
+                    outputStream.Write(Lower[segmentBuffer[2]]);
+                }
+            }
+            else if (segmentBuffer[2] != 0)
+            { // 1 - 9
+                outputStream.Write(Lower[segmentBuffer[2]]);
+            }
+
+            SegmentToStringHigher(outputStream, zerosAfterCurrentSegment);
+        }
+
+        private static void SegmentToStringHigher(TextWriter outputStream, int zerosAfterCurrentSegment)
+        {
+            var countMaxKey = 0;
+            var numOfZeros = zerosAfterCurrentSegment;
+            // find and remove largest values possible
+            // since smaller values must be first 
+            {
                 var maxSet = Higher.Last().Value;
-                var numOfZeros = (totalSegmentCount - 1) * 3;
-                while (numOfZeros > 0)
+                while (numOfZeros > maxSet)
                 {
-                    if (numOfZeros > maxSet)
-                    {
-                        aboveHigherValues.Push(Higher.Last().Key);
-
-                        numOfZeros -= maxSet;
-                        continue;
-                    }
-
-                    var value = Higher.FirstOrDefault(m => m.Value >= numOfZeros);
-
-                    aboveHigherValues.Push(value.Key);
-                    numOfZeros -= value.Value;
+                    countMaxKey++;
+                    numOfZeros -= maxSet;
                 }
+            }
 
-                var sb = new StringBuilder();
-                while(aboveHigherValues.Count > 0)
+            // find smaller values based on wether they can be found 
+            // in the subset or must be calculated with smaller values to reach exact number
+            if (numOfZeros > 0)
+            {
+                if (numOfZeros % 3 == 0)
                 {
-                    sb.Append(aboveHigherValues.Pop());
-                    sb.Append('-');
+                    outputStream.Write(wordSeparator);
+                    outputStream.Write(Higher[numOfZeros]);
                 }
+                else if (numOfZeros % 3 == 1)
+                {
+                    outputStream.Write(wordSeparator);
+                    outputStream.Write(Higher.First().Key);
+                    outputStream.Write(wordSeparator);
+                    outputStream.Write(Higher.First().Key);
+                    outputStream.Write(wordSeparator);
+                    outputStream.Write(Higher[numOfZeros - 4]);
+                }
+                else// == 2
+                {
+                    outputStream.Write(wordSeparator);
+                    outputStream.Write(Higher.First().Key);
+                    outputStream.Write(wordSeparator);
+                    outputStream.Write(Higher[numOfZeros - 2]);
+                }
+            }
+            var maxValue = Higher.Last().Key;
+            for (int j = 0; j < countMaxKey; j++)
+            {
+                outputStream.Write(wordSeparator);
+                outputStream.Write(maxValue);
+            }
+        }
 
-                return Rec_ConvertToWord(NumberInLeftSegment) + sb.ToString() + Rec_ConvertToWord(retSize);
+        /// <summary>
+        /// Allows byte to be used as number
+        /// </summary>
+        /// <param name="num">destructively changes all values</param>
+        /// <exception cref="InvalidCastException"></exception>
+        private static void ConvertCharToByte(ref byte[] num)
+        {
+            for (int i = 0; i < num.Length; i++)
+            {
+                if (num[i] == 0)
+                    continue;
+
+                num[i] -= (byte)'0';
+                if (num[i] > 9)
+                    throw new InvalidCastException("Failed to convert: " + num[i] + " (before subtraction: " + (char)(num[i] + (byte)'0') + ")");
             }
         }
     }
