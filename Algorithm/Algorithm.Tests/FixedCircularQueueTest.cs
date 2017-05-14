@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-namespace Algorithm.Tests
+namespace Algorithm.CSharp.Tests
 {
     [TestClass]
     public class FixedCircularQueueTest

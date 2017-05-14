@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Algorithm
+namespace Algorithm.CSharp
 {
     /// <summary>
     /// OverWrittable circular queue

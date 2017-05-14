@@ -1,10 +1,10 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Algorithm.Transfer;
+using Algorithm.CSharp.Transfer;
 using System.IO;
 using System.Threading;
 
-namespace Algorithm.Tests.Transfer
+namespace Algorithm.CSharp.Tests.Transfer
 {
     [TestClass]
     public class StreamListenerTest

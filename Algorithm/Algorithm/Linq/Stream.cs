@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace Algorithm.Linq
+namespace Algorithm.CSharp.Linq
 {
     public static class StreamLinq
     {

@@ -6,8 +6,8 @@
     <ProjectGuid>{7CA84D43-6F01-4189-915E-926811E34677}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Algorithm.Tests</RootNamespace>
-    <AssemblyName>Algorithm.Tests</AssemblyName>
+    <RootNamespace>Algorithm.CSharp.Tests</RootNamespace>
+    <AssemblyName>Algorithm.CSharp.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -62,9 +62,9 @@
     <Compile Include="Transfer\StreamListenerTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Algorithm\AlgorithmCS.csproj">
+    <ProjectReference Include="..\Algorithm\Algorithm.CSharp.csproj">
       <Project>{13B61A6F-19E9-43E8-8B35-F2093AB5CEB8}</Project>
-      <Name>AlgorithmCS</Name>
+      <Name>Algorithm.CSharp</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

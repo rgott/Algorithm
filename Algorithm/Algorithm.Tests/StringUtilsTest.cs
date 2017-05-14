@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Algorithm.Tests
+namespace Algorithm.CSharp.Tests
 {
     [TestClass]
     public class StringUtilsTest

@@ -7,8 +7,8 @@
     <ProjectGuid>{13B61A6F-19E9-43E8-8B35-F2093AB5CEB8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Algorithm</RootNamespace>
-    <AssemblyName>Algorithm</AssemblyName>
+    <RootNamespace>Algorithm.CSharp</RootNamespace>
+    <AssemblyName>Algorithm.CSharp</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

@@ -3,9 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlgorithmCS.Tests", "Algorithm.Tests\AlgorithmCS.Tests.csproj", "{7CA84D43-6F01-4189-915E-926811E34677}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlgorithmCSharp.Tests", "Algorithm.Tests\AlgorithmCSharp.Tests.csproj", "{7CA84D43-6F01-4189-915E-926811E34677}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlgorithmCS", "Algorithm\AlgorithmCS.csproj", "{13B61A6F-19E9-43E8-8B35-F2093AB5CEB8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algorithm.CSharp", "Algorithm\Algorithm.CSharp.csproj", "{13B61A6F-19E9-43E8-8B35-F2093AB5CEB8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algorithm.FSharp.Tests", "Algorithm.FSharp.Tests\Algorithm.FSharp.Tests.csproj", "{49E0EF39-805B-447F-ADD2-ACF373229352}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Algorithm.FSharp", "Algorithm.FSharp\Algorithm.FSharp.fsproj", "{EA4266DD-5576-45C1-9AE3-907EB624D497}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +35,22 @@ Global
 		{13B61A6F-19E9-43E8-8B35-F2093AB5CEB8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{13B61A6F-19E9-43E8-8B35-F2093AB5CEB8}.Release|x86.ActiveCfg = Release|Any CPU
 		{13B61A6F-19E9-43E8-8B35-F2093AB5CEB8}.Release|x86.Build.0 = Release|Any CPU
+		{49E0EF39-805B-447F-ADD2-ACF373229352}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49E0EF39-805B-447F-ADD2-ACF373229352}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49E0EF39-805B-447F-ADD2-ACF373229352}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{49E0EF39-805B-447F-ADD2-ACF373229352}.Debug|x86.Build.0 = Debug|Any CPU
+		{49E0EF39-805B-447F-ADD2-ACF373229352}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49E0EF39-805B-447F-ADD2-ACF373229352}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49E0EF39-805B-447F-ADD2-ACF373229352}.Release|x86.ActiveCfg = Release|Any CPU
+		{49E0EF39-805B-447F-ADD2-ACF373229352}.Release|x86.Build.0 = Release|Any CPU
+		{EA4266DD-5576-45C1-9AE3-907EB624D497}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA4266DD-5576-45C1-9AE3-907EB624D497}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA4266DD-5576-45C1-9AE3-907EB624D497}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EA4266DD-5576-45C1-9AE3-907EB624D497}.Debug|x86.Build.0 = Debug|Any CPU
+		{EA4266DD-5576-45C1-9AE3-907EB624D497}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA4266DD-5576-45C1-9AE3-907EB624D497}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA4266DD-5576-45C1-9AE3-907EB624D497}.Release|x86.ActiveCfg = Release|Any CPU
+		{EA4266DD-5576-45C1-9AE3-907EB624D497}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

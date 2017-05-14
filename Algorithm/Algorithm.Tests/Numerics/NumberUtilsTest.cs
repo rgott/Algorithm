@@ -1,10 +1,10 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Numerics;
-using Algorithm.Numerics;
+using Algorithm.CSharp.Numerics;
 using System.IO;
 
-namespace Algorithm.Tests.Numerics
+namespace Algorithm.CSharp.Tests.Numerics
 {
     [TestClass]
     public class NumberUtilsTest

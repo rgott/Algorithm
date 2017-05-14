@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 
-namespace Algorithm.Tests
+namespace Algorithm.CSharp.Tests
 {
     [TestClass]
     public class SortTest

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Algorithm
+namespace Algorithm.CSharp
 {
     public class Sort<T> where T : IComparable
     {

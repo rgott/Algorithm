@@ -4,9 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Numerics;
 using System.Text;
-using Algorithm.Linq;
+using Algorithm.CSharp.Linq;
 
-namespace Algorithm.Numerics
+namespace Algorithm.CSharp.Numerics
 {
     public partial class NumberUtils
     {

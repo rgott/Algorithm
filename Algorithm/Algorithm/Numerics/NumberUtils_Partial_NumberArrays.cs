@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Algorithm.Numerics
+namespace Algorithm.CSharp.Numerics
 {
     public partial class NumberUtils
     {

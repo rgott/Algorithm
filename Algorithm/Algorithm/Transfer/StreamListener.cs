@@ -2,7 +2,7 @@
 using System.IO;
 using System.Text;
 
-namespace Algorithm.Transfer
+namespace Algorithm.CSharp.Transfer
 {
     public class StreamListener
     {

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Algorithm
+namespace Algorithm.CSharp
 {
     /// <summary>
     /// Doubly Linked Dictionary. Dictionary where both keys and values can be searched for efficiently.

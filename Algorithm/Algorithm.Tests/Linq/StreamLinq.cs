@@ -5,9 +5,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Algorithm.Linq;
+using Algorithm.CSharp.Linq;
 
-namespace Algorithm.Tests.Linq
+namespace Algorithm.CSharp.Tests.Linq
 {
     [TestClass]
     public class StreamLinq
