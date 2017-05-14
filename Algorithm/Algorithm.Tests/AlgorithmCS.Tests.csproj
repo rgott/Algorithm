@@ -62,9 +62,9 @@
     <Compile Include="Transfer\StreamListenerTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Algorithm\Algorithm.csproj">
+    <ProjectReference Include="..\Algorithm\AlgorithmCS.csproj">
       <Project>{13B61A6F-19E9-43E8-8B35-F2093AB5CEB8}</Project>
-      <Name>Algorithm</Name>
+      <Name>AlgorithmCS</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>
