@@ -135,7 +135,7 @@ namespace Algorithm.CSharp
 
         protected static bool Remove<M,N>(IDictionary<M,N> Forward, IDictionary<N, M> Reverse, M key)
         {
-            bool reverseRemoval = false;
+            var reverseRemoval = false;
             if (Forward.TryGetValue(key, out var value))
             {
                 reverseRemoval = Reverse.Remove(value);

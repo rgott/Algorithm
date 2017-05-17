@@ -21,9 +21,9 @@ namespace Algorithm.CSharp
         /// <returns></returns>
         public static List<string> MultiSplit(this string input, params string[] findIndexes)
         {
-            string value = input;
-            List<string> indicies = new List<string>(findIndexes);
-            List<string> result = new List<string>();
+            var value = input;
+            var indicies = new List<string>(findIndexes);
+            var result = new List<string>();
             while (value.Length != 0)
             {
                 var minIndex = value.Length;
@@ -73,10 +73,10 @@ namespace Algorithm.CSharp
         /// <returns>Two lists items split and the index string that the item was split on.</returns>
         public static (List<string> SplitItems, List<string> splitOnIndecies) MultiSplitWithSplits(this string input, params string[] findIndexes)
         {
-            string value = input;
-            List<string> splitOnIndecies = new List<string>();
-            List<string> indicies = new List<string>(findIndexes);
-            List<string> result = new List<string>();
+            var value = input;
+            var splitOnIndecies = new List<string>();
+            var indicies = new List<string>(findIndexes);
+            var result = new List<string>();
             while (value.Length != 0)
             {
                 var minIndex = value.Length;
@@ -126,7 +126,7 @@ namespace Algorithm.CSharp
 
         public static bool IsPalindromeLoop(string word)
         {
-            for (int i = 0; i < word.Length / 2; i++)
+            for (var i = 0; i < word.Length / 2; i++)
             {
                 if(word[i] != word[word.Length - i - 1])
                     return false;

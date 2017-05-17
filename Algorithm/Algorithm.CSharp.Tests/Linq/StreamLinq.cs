@@ -15,7 +15,7 @@ namespace Algorithm.CSharp.Tests.Linq
         [TestMethod]
         public void StreamLinq1Test()
         {
-            MemoryStream stream = new MemoryStream(Encoding.ASCII.GetBytes("One Hundred"));
+            var stream = new MemoryStream(Encoding.ASCII.GetBytes("One Hundred"));
 
             CollectionAssert.AreEqual(
                 new string[] { "One", "Hundred" }, 

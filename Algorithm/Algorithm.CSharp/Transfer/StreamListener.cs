@@ -52,7 +52,7 @@ namespace Algorithm.CSharp.Transfer
         {
             try
             {
-                int bytesRead = _Stream.EndRead(ar);
+                var bytesRead = _Stream.EndRead(ar);
 
                 if (!_Stream.CanRead)
                 {

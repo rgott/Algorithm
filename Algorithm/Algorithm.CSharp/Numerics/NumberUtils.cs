@@ -171,7 +171,7 @@ namespace Algorithm.CSharp.Numerics
 
             (bool IsNegative, int TakenLength) FillFirstSegment(ref byte[] buffer, int length)
             {
-                bool IsNegative = false;
+                var IsNegative = false;
                 var start = (3 - (length % 3)) % 3;
                 inputNumber.Read(segmentBuffer, start, 1);
                 length--;
@@ -205,7 +205,7 @@ namespace Algorithm.CSharp.Numerics
 
         public static bool Contains(ref byte[] buffer, Func<byte,bool> predicate)
         {
-            for (int i = 0; i < buffer.Length; i++)
+            for (var i = 0; i < buffer.Length; i++)
             {
                 if(predicate(buffer[i]))
                     return true;
@@ -294,7 +294,7 @@ namespace Algorithm.CSharp.Numerics
                 }
             }
             var maxValue = Higher.Last().Key;
-            for (int j = 0; j < countMaxKey; j++)
+            for (var j = 0; j < countMaxKey; j++)
             {
                 outputStream.Write(wordSeparator);
                 outputStream.Write(maxValue);
@@ -308,7 +308,7 @@ namespace Algorithm.CSharp.Numerics
         /// <exception cref="InvalidCastException"></exception>
         private static void ConvertCharToByte(ref byte[] num)
         {
-            for (int i = 0; i < num.Length; i++)
+            for (var i = 0; i < num.Length; i++)
             {
                 if (num[i] == 0)
                     continue;

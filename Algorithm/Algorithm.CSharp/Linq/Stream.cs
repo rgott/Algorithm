@@ -12,20 +12,19 @@ namespace Algorithm.CSharp.Linq
         /// Implementation of Take for Streams
         /// </summary>
         /// <param name="stream">The sequence to return elements from.</param>
-        /// <param name="predicate">Take while expression is false, once expression is true return value.</param>
+        /// <param name="predicate">Take character while expression is false, once expression is true return value.</param>
         /// <param name="size">Buffer size to read from stream</param>
         /// <returns></returns>
         public static IEnumerable<string> Take(this Stream stream, Func<byte, bool> predicate, int size = 5)
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
+            var buffer = new byte[size];
 
-            byte[] buffer = new byte[size];
-
-            int read = -1;
+            var read = -1;
             while(stream.CanRead && read != 0)
             {
                 read = stream.Read(buffer, 0, size);
-                for (int i = 0; i < read; i++)
+                for (var i = 0; i < read; i++)
                 {
                     if(predicate(buffer[i]))
                     {
